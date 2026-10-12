@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Welcome to Pscmr Mid Calci</title>
-  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="icon" type="image/png" href="{{ url_for('serve_image', filename='logo.png') }}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&family=Inspiration&display=swap" rel="stylesheet" />
@@ -20,11 +20,11 @@
     <h2>choose your gender</h2>
     <div class="characters">
       <button class="character female" type="button" aria-label="Select Female" onclick="window.location.href='girl.html'">
-        <img src="images/female.png" alt="Female Character Illustration" />
+        <img src="{{ url_for('serve_image', filename='female.png') }}" alt="Female Character" />
       </button>
 
       <button class="character male" type="button" aria-label="Select Male" onclick="window.location.href='boy.html'">
-        <img src="images/male.png" alt="Male Character Illustration" />
+        <img src="{{ url_for('serve_image', filename='male.png') }}" alt="Male Character" />
       </button>
     </div>
   </main>
