@@ -15,7 +15,7 @@ import threading
 import time
 import uuid
 import cv2
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, send_from_directory
 from flask_cors import CORS
 import numpy as np
 from PIL import Image
@@ -24,6 +24,7 @@ from pytesseract import Output
 
 app = Flask(__name__)
 CORS(app)
+IMAGES_DIR = os.path.join(app.root_path, "static", "images")
 
 # Free-tier hosts give you a fraction of one CPU core, not real
 # parallelism. Rather than let concurrent uploads fight over that sliver
@@ -290,6 +291,10 @@ def boy_page():
 @app.route("/calculator")
 def calculator_page():
     return render_template("calculator.html")
+
+@app.route("/images/<path:filename>")
+def serve_image(filename):
+    return send_from_directory(IMAGES_DIR, filename)
 
 @app.route("/process-image", methods=["POST"])
 def process_image():
