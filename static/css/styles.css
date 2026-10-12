@@ -1,0 +1,127 @@
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      color: #111111;
+      font-family: "Times New Roman", Georgia, serif;
+    }
+
+    
+    .header {
+      flex: 0 0 auto;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 24px;
+      background: #000000;
+    }
+
+    .header h1 {
+      width: 100%;
+      margin: 0;
+      color: #ffffff;
+      font-family: "Inspiration", cursive;
+      font-size: clamp(36px, 5.8vw, 56px);
+      font-weight: 400;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .gender-selection {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 16px 16px env(safe-area-inset-bottom, 16px);
+    }
+
+    .gender-selection h2 {
+      flex: 0 0 auto;
+      margin: 0 0 4px;
+      font-family: "Inika", Georgia, serif;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .characters {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      gap: clamp(16px, 5vw, 60px);
+    }
+
+    .character {
+      position: relative;
+      flex: 1 1 0;
+      max-width: 48%;
+      height: 100%;
+      overflow: hidden;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      transform-origin: center bottom;
+      transition: transform 300ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .character:hover,
+    .character:focus-visible {
+      transform: translateY(-8px) scale(1.03);
+    }
+
+    .character:focus-visible {
+      outline: 2px solid #855148;
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .character img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      pointer-events: none;
+    }
+
+    @media (orientation: portrait) {
+      .character img {
+        object-fit: cover;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .header {
+        min-height: 100px;
+      }
+      .header h1 {
+        font-size: clamp(30px, 10vw, 48px);
+      }
+      .gender-selection {
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      .gender-selection h2 {
+        font-size: 24px;
+      }
+      .characters {
+        gap: 8px;
+      }
+    }
