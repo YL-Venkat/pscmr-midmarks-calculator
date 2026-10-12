@@ -1,0 +1,408 @@
+* {
+      box-sizing: border-box;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: #fff;
+      color: #080808;
+      font-family: "Inika", Georgia, serif;
+    }
+    .page {
+      width: 100%;
+      min-height: 0;
+      margin: 0 auto;
+      max-width: 1440px;
+      padding: 0 clamp(20px, 5vw, 72px) 74px;
+      background: #fff;
+    }
+    .topbar {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .brand {
+      flex: 0 0 auto;
+      color: #111;
+      font-family: "Inspiration", cursive;
+      font-size: 30px;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .navigation {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(16px, 2.4vw, 36px);
+    }
+    .navigation a {
+      color: #080808;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .navigation a:hover,
+    .navigation a:focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .hero {
+      min-height: clamp(350px, 42vw, 640px);
+      display: grid;
+      grid-template-columns: minmax(220px, 35%) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(20px, 4vw, 56px);
+      margin: 1px auto 0;
+      padding: clamp(24px, 5vw, 64px);
+      background: #dedede;
+    }
+    .hero-copy {
+      grid-column: 2;
+      text-align: center;
+    }
+    h1 {
+      max-width: 720px;
+      margin: 0 auto 16px;
+      font-family: "Lakki Reddy", Georgia, serif;
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+    .instruction {
+      margin: 0;
+      font-family: "Inder", sans-serif;
+      font-size: clamp(16px, 2vw, 24px);
+      line-height: 1.45;
+    }
+    .start-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45em;
+      max-width: 100%;
+      min-width: clamp(150px, 18vw, 220px);
+      margin: 26px auto 0;
+      border: 0;
+      border-radius: 24px;
+      padding: 8px 20px 10px;
+      background: #050505;
+      color: #fff;
+      font: 400 clamp(17px, 1.8vw, 24px)/1.25 "Lemon", Georgia, serif;
+      cursor: pointer;
+      transition: transform 180ms ease, background-color 180ms ease;
+    }
+    .start-button:hover {
+      transform: translateY(-2px);
+      background: #333;
+    }
+    .start-button:focus-visible {
+      outline: 3px solid #a44c64;
+      outline-offset: 3px;
+    }
+    .character {
+      grid-column: 1;
+      grid-row: 1;
+      display: block;
+      width: 100%;
+      height: min(38vw, 480px);
+      min-height: 225px;
+      object-fit: contain;
+      object-position: center;
+    }
+    #image-input {
+      display: none;
+    }
+    @media (max-width: 600px) {
+      .page {
+        padding: 0 20px 74px;
+      }
+      .topbar {
+        min-height: 76px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px 18px;
+        padding: 12px 0;
+      }
+      .brand {
+        font-size: 27px;
+      }
+      .navigation {
+        flex-wrap: wrap;
+        gap: 8px 14px;
+      }
+      .navigation a {
+        font-size: 13px;
+      }
+      .hero {
+        min-height: 0;
+        grid-template-columns: 105px minmax(0, 1fr);
+        gap: 10px;
+        padding: 24px 16px;
+      }
+      h1 {
+        font-size: clamp(30px, 8vw, 46px);
+        line-height: 1.15;
+      }
+      .instruction {
+        font-size: clamp(14px, 3.8vw, 18px);
+      }
+      .character {
+        height: 190px;
+        min-height: 0;
+      }
+      .start-button {
+        min-width: 0;
+        margin-top: 20px;
+        padding-right: 14px;
+        padding-left: 14px;
+        font: 400 clamp(15px, 4vw, 19px)/1.25 "Lemon", Georgia, serif;
+      }
+    }
+    @media (max-width: 380px) {
+      .page {
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+      .hero {
+        grid-template-columns: 82px minmax(0, 1fr);
+        gap: 6px;
+        padding: 20px 10px;
+      }
+      .character {
+        height: 160px;
+      }
+      .instruction {
+        font-size: clamp(13px, 3.5vw, 15px);
+      }
+    }
+
+     .overview-screen {
+      min-height: 0;
+      padding: clamp(32px, 6vw, 76px) clamp(20px, 8vw, 110px);
+      background: #dedede;
+    }
+    .overview-title {
+      margin: 0 0 clamp(28px, 5vw, 56px);
+      text-align: center;
+      font-family: "Inspiration", cursive;
+      font-size: clamp(48px, 8vw, 84px);
+      font-weight: 400;
+      line-height: 1;
+    }
+    .overview-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(22px, 5vw, 64px);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .overview-item {
+      min-width: 0;
+    }
+    .overview-card {
+      overflow: hidden;
+      padding: clamp(12px, 2vw, 24px);
+      border-radius: 20px;
+      background:#fff;
+    }
+    .overview-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .overview-card-label {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: "Inder", sans-serif;
+      font-size: 20px;
+    }
+    .src-note {
+      margin: 10px 0 0;
+      text-align: center;
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+    .overview-notes {
+      max-width: 1100px;
+      margin: clamp(28px, 5vw, 54px) auto 0;
+      padding-left: 1.2em;
+      font-family: "Inder", sans-serif;
+      font-size: clamp(18px, 2.4vw, 28px);
+      line-height: 1.4;
+    }
+    .overview-notes li + li {
+      margin-top: 8px;
+    }
+     @media (max-width: 900px) {
+      .overview-cards {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .overview-notes {
+        font-size: clamp(17px, 4vw, 24px);
+      }
+    }
+
+    .updates-features {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      background: #fff;
+    }
+    .info-panel {
+      min-width: 0;
+      padding: clamp(36px, 6vw, 76px) clamp(24px, 6vw, 72px);
+      scroll-margin-top: 16px;
+    }
+    .info-panel + .info-panel {
+      border-left: 5px solid #d9d9d9;
+    }
+    .info-title {
+      margin: 0 0 clamp(42px, 8vw, 90px);
+      text-align: center;
+      font-family: "Inspiration", cursive;
+      font-size: clamp(48px, 8vw, 76px);
+      font-weight: 400;
+      line-height: 1;
+    }
+    .info-panel ul,
+    .info-panel p {
+      margin: 0;
+      font-family: "Inder", sans-serif;
+      font-size: clamp(18px, 2.4vw, 25px);
+      line-height: 1.25;
+    }
+    .info-panel ul {
+      padding-left: 1.2em;
+    }
+    .info-panel li + li {
+      margin-top: 4px;
+    }
+    .info-panel p + p {
+      margin-top: 28px;
+    }
+
+    @media (max-width: 600px) {
+      .updates-features {
+        grid-template-columns: 1fr;
+      }
+      .info-panel {
+        padding: 42px 24px;
+      }
+      .info-panel + .info-panel {
+        border-top: 5px solid #d9d9d9;
+        border-left: 0;
+      }
+      .info-title {
+        margin-bottom: 32px;
+      }
+    }
+
+    .contact-screen {
+      padding: 28px clamp(24px, 8vw, 90px) 40px;
+      background: #d9d9d9;
+      scroll-margin-top: 16px;
+    }
+    .contact-title {
+      margin: 0 0 22px;
+      text-align: center;
+      font-family: "Inspiration", cursive;
+      font-size: clamp(52px, 8vw, 72px);
+      font-weight: 400;
+      line-height: 1;
+    }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(220px, 0.85fr);
+      align-items: center;
+      gap: clamp(32px, 8vw, 100px);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+    .contact-form label {
+      margin-top: 4px;
+      font-size: clamp(17px, 2.2vw, 22px);
+    }
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      border: 0;
+      border-radius: 24px;
+      padding: 10px 24px;
+      background: #fff;
+      color: #080808;
+      font: inherit;
+      font-size: clamp(17px, 2.2vw, 22px);
+    }
+    .contact-form select {
+      min-height: 46px;
+      padding-right: 52px;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m3 6 5 5 5-5' fill='none' stroke='%23080808' stroke-width='2'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 18px center;
+      background-size: 16px;
+      cursor: pointer;
+    }
+    .contact-form input {
+      min-height: 46px;
+    }
+    .contact-form textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: #333;
+      opacity: 1;
+    }
+    .contact-form button {
+      align-self: center;
+      min-width: 130px;
+      margin-top: 10px;
+      border: 0;
+      border-radius: 16px;
+      padding: 8px 24px;
+      background: #050505;
+      color: #fff;
+      font: inherit;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .contact-character {
+      display: block;
+      width: 100%;
+      height: min(38vw, 480px);
+      min-height: 225px;
+      object-fit: contain;
+      object-position: center;
+    }
+    @media (max-width: 700px) {
+      .contact-screen {
+        padding: 32px 24px;
+      }
+      .contact-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 24px;
+      }
+      .contact-form {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .contact-character {
+        display: none;
+      }
+    }
