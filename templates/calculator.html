@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PSCMR Mid Calci</title>
+  <link rel="icon" type="image/png" href="images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inika:wght@400;700&family=Inspiration&display=swap" rel="stylesheet" />
+  <style>
+    @property --angle-1 {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: -75deg;
+    }
+    @property --angle-2 {
+      syntax: "<angle>";
+      inherits: false;
+      initial-value: -45deg;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    :root {
+      --anim-hover-time: 400ms;
+      --anim-hover-ease: cubic-bezier(0.25, 1, 0.5, 1);
+      --primary: #2563eb;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 16px 20px 48px;
+      background: #D9D9D9;
+      color: #111;
+      font-family: "Inder", sans-serif;
+    }
+    main {
+      width: min(100%, 760px);
+      margin: 0 auto;
+      text-align: center;
+    }
+    h1 {
+      margin: 0 0 38px;
+      font-family: "Inspiration", cursive;
+      font-size: clamp(48px, 8vw, 68px);
+      font-weight: 400;
+      line-height: 1.2;
+    }
+    .instruction {
+      margin: 0 0 38px;
+      font-size: clamp(18px, 3vw, 24px);
+      line-height: 1.4;
+    }
+    #imageInput {
+      display: none;
+    }
+    /* ==============================
+       GLASS BUTTON SHARED WRAPPER
+    ============================== */
+    .button-wrap {
+      position: relative;
+      display: inline-flex;
+      z-index: 2;
+      border-radius: 999vw;
+      background: transparent;
+      pointer-events: none;
+      transition: all var(--anim-hover-time) var(--anim-hover-ease);
+    }
+    .button-wrap[hidden] {
+      display: none;
+    }
+    .button-shadow {
+      --shadow-cuttoff-fix: 2em;
+      position: absolute;
+      width: calc(100% + var(--shadow-cuttoff-fix));
+      height: calc(100% + var(--shadow-cuttoff-fix));
+      top: calc(0% - var(--shadow-cuttoff-fix) / 2);
+      left: calc(0% - var(--shadow-cuttoff-fix) / 2);
+      filter: blur(clamp(2px, 0.125em, 12px));
+      -webkit-filter: blur(clamp(2px, 0.125em, 12px));
+      overflow: visible;
+      pointer-events: none;
+    }
+    .button-shadow::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      inset: 0;
+      border-radius: 999vw;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+      width: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+      height: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+      top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+      left: calc(var(--shadow-cuttoff-fix) - 0.875em);
+      padding: 0.125em;
+      box-sizing: border-box;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      transition: all var(--anim-hover-time) var(--anim-hover-ease);
+      overflow: visible;
+      opacity: 1;
+    }
+    /* ==============================
+       UPLOAD BUTTON
+    ============================== */
+    .upload-button {
+      --border-width: clamp(1px, 0.0625em, 4px);
+      all: unset;
+      cursor: pointer;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: min(280px, 100%);
+      min-width: 230px;
+      min-height: 72px;
+      padding: 8px 10px 8px 24px;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      pointer-events: auto;
+      z-index: 3;
+      background: linear-gradient(
+        -75deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.05)
+      );
+      border-radius: 999vw;
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+        inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+        0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+        0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+        0 0 0 0 rgba(255, 255, 255, 1);
+      backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+      -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+      transition: all var(--anim-hover-time) var(--anim-hover-ease);
+    }
+    .upload-button[hidden] {
+      display: none;
+    }
+    .upload-button:hover {
+      transform: scale(0.975);
+      backdrop-filter: blur(0.01em);
+      -webkit-backdrop-filter: blur(0.01em);
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+        inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+        0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+        0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
+        0 0 0 0 rgba(255, 255, 255, 1);
+    }
+    .upload-button .upload-label {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
+      font-family: "Inder", sans-serif;
+      font-size: 25px;
+      font-weight: 400;
+      color: rgba(50, 50, 50, 1);
+      text-shadow: 0em 0.25em 0.05em rgba(0, 0, 0, 0.1);
+      transition: all var(--anim-hover-time) var(--anim-hover-ease);
+    }
+    .upload-button:hover .upload-label {
+      text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
+    }
+    .upload-button .upload-label::after {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: 3;
+      width: calc(100% - var(--border-width));
+      height: calc(100% - var(--border-width));
+      top: calc(0% + var(--border-width) / 2);
+      left: calc(0% + var(--border-width) / 2);
+      box-sizing: border-box;
+      border-radius: 999vw;
+      overflow: clip;
+      background: linear-gradient(
+        var(--angle-2),
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 40% 50%,
+        rgba(255, 255, 255, 0) 55%
+      );
+      mix-blend-mode: screen;
+      pointer-events: none;
+      background-size: 200% 200%;
+      background-position: 0% 50%;
+      background-repeat: no-repeat;
+      transition:
+        background-position calc(var(--anim-hover-time) * 1.25) var(--anim-hover-ease),
+        --angle-2 calc(var(--anim-hover-time) * 1.25) var(--anim-hover-ease);
+    }
+    .upload-button:hover .upload-label::after {
+      background-position: 25% 50%;
+    }
+    .upload-button:active .upload-label::after {
+      background-position: 50% 15%;
+      --angle-2: -15deg;
+    }
+    .upload-button .btn-icon {
+      position: relative;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(100, 110, 135, 0.2);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.52);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    .upload-button .btn-icon svg {
+      display: block;
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+    .upload-button::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      border-radius: 999vw;
+      width: calc(100% + var(--border-width));
+      height: calc(100% + var(--border-width));
+      top: calc(0% - var(--border-width) / 2);
+      left: calc(0% - var(--border-width) / 2);
+      padding: var(--border-width);
+      box-sizing: border-box;
+      background: conic-gradient(
+          from var(--angle-1) at 50% 50%,
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0) 5% 40%,
+          rgba(0, 0, 0, 0.5) 50%,
+          rgba(0, 0, 0, 0) 60% 95%,
+          rgba(0, 0, 0, 0.5)
+        ),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      transition:
+        all var(--anim-hover-time) var(--anim-hover-ease),
+        --angle-1 500ms ease;
+      box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
+    }
+    .upload-button:hover::after {
+      --angle-1: -125deg;
+    }
+    .upload-button:active::after {
+      --angle-1: -75deg;
+    }
+    /* ==============================
+       IMAGE PREVIEW
+    ============================== */
+    .preview-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    .preview-area[hidden] {
+      display: none;
+    }
+    .preview-image {
+      display: block;
+      max-width: min(100%, 620px);
+      max-height: 48vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    }
+    /* Replace + Calculate sit side by side */
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    /* ==============================
+       GLASS CALCULATE / REPLACE BUTTON
+    ============================== */
+    .calculate-button-wrap {
+      position: relative;
+      display: inline-flex;
+      z-index: 2;
+      border-radius: 999vw;
+      background: transparent;
+      transition: all var(--anim-hover-time) var(--anim-hover-ease);
+    }
+    .calculate-button {
+      --border-width: clamp(1px, 0.0625em, 4px);
+      all: unset;
+      cursor: pointer;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 250px;
+      min-height: 64px;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      z-index: 3;
+      background: linear-gradient(
+        -75deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.2),
+        rgba(255, 255, 255, 0.05)
+      );
+      border-radius: 999vw;
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+        inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+        0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+        0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+        0 0 0 0 rgba(255, 255, 255, 1);
+      backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+      -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+      transition: all var(--anim-hover-time) var(--anim-hover-ease);
+    }
+    .calculate-button:hover {
+      transform: scale(0.975);
+      backdrop-filter: blur(0.01em);
+      -webkit-backdrop-filter: blur(0.01em);
+      box-shadow:
+        inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+        inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+        0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+        0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
+        0 0 0 0 rgba(255, 255, 255, 1);
+    }
+    .calculate-button span {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      font-family: "Inika", Georgia, serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: rgba(50, 50, 50, 1);
+      text-shadow: 0em 0.25em 0.05em rgba(0, 0, 0, 0.1);
+      transition: all var(--anim-hover-time) var(--anim-hover-ease);
+      padding-inline: 1.15em;
+      padding-block: 0.55em;
+      width: 100%;
+      height: 100%;
+    }
+    .calculate-button:hover span {
+      text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
+    }
+    .calculate-button span::after {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: 3;
+      width: calc(100% - var(--border-width));
+      height: calc(100% - var(--border-width));
+      top: calc(0% + var(--border-width) / 2);
+      left: calc(0% + var(--border-width) / 2);
+      box-sizing: border-box;
+      border-radius: 999vw;
+      overflow: clip;
+      background: linear-gradient(
+        var(--angle-2),
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 40% 50%,
+        rgba(255, 255, 255, 0) 55%
+      );
+      mix-blend-mode: screen;
+      pointer-events: none;
+      background-size: 200% 200%;
+      background-position: 0% 50%;
+      background-repeat: no-repeat;
+      transition:
+        background-position calc(var(--anim-hover-time) * 1.25) var(--anim-hover-ease),
+        --angle-2 calc(var(--anim-hover-time) * 1.25) var(--anim-hover-ease);
+    }
+    .calculate-button:hover span::after {
+      background-position: 25% 50%;
+    }
+    .calculate-button:active span::after {
+      background-position: 50% 15%;
+      --angle-2: -15deg;
+    }
+    .calculate-button::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      border-radius: 999vw;
+      width: calc(100% + var(--border-width));
+      height: calc(100% + var(--border-width));
+      top: calc(0% - var(--border-width) / 2);
+      left: calc(0% - var(--border-width) / 2);
+      padding: var(--border-width);
+      box-sizing: border-box;
+      background: conic-gradient(
+          from var(--angle-1) at 50% 50%,
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0) 5% 40%,
+          rgba(0, 0, 0, 0.5) 50%,
+          rgba(0, 0, 0, 0) 60% 95%,
+          rgba(0, 0, 0, 0.5)
+        ),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5));
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      transition:
+        all var(--anim-hover-time) var(--anim-hover-ease),
+        --angle-1 500ms ease;
+      box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
+    }
+    .calculate-button:hover::after {
+      --angle-1: -125deg;
+    }
+    .calculate-button:active::after {
+      --angle-1: -75deg;
+    }
+    .calculate-button-wrap:has(.calculate-button:hover) .button-shadow {
+      filter: blur(clamp(2px, 0.0625em, 6px));
+      transition: filter var(--anim-hover-time) var(--anim-hover-ease);
+    }
+    .calculate-button-wrap:has(.calculate-button:hover) .button-shadow::after {
+      top: calc(var(--shadow-cuttoff-fix) - 0.875em);
+      opacity: 1;
+    }
+    .calculate-button-wrap:has(.calculate-button:active) {
+      transform: rotate3d(1, 0, 0, 25deg);
+    }
+    /* ==============================
+       RESULT CARDS (built by script.js)
+    ============================== */
+    #loading {
+      font-size: 18px;
+    }
+    #resultsContainer {
+      margin-top: 32px;
+      display: grid;
+      gap: 20px;
+      text-align: left;
+    }
+    .subject-card { background: #fff; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,.12); overflow: hidden; }
+    .card-header { padding: 14px 20px; font-size: 20px; background: #f3f4f6; border-bottom: 1px solid #e5e7eb; }
+    .card-body { padding: 20px; display: grid; gap: 16px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .metric-box { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; text-align: center; }
+    .metric-box.best { border: 2px solid #16a34a; background: #f0fdf4; }
+    .box-title { font-size: 14px; color: #555; }
+    .box-value { font-size: 32px; margin: 6px 0; }
+    .box-sub { font-size: 13px; color: #777; }
+    .badge-best { display: inline-block; margin-top: 8px; padding: 2px 10px; border-radius: 999px; background: #dcfce7; color: #15803d; font-size: 12px; }
+    .weightage-banner { display: flex; justify-content: space-between; padding: 12px 16px; background: #f9fafb; border-radius: 12px; }
+    .w-label { display: block; font-size: 13px; color: #666; }
+    .w-val { font-size: 20px; }
+    .banner-blue { background: #dbeafe; color: #1d4ed8; border: 2px solid #3b82f6; border-radius: 12px; padding: 20px; text-align: center; }
+    .banner-title { font-size: 14px; }
+    .banner-val { font-size: 34px; margin: 6px 0; }
+    .banner-sub { font-size: 13px; }
+    .status-pill { padding: 12px 16px; border-radius: 12px; background: #f3f4f6; text-align: center; font-size: 15px; }
+    /* ==============================
+       MOBILE RESPONSIVENESS
+    ============================== */
+    @media (max-width: 480px) {
+      body {
+        padding: 28px 16px 36px;
+      }
+      h1 {
+        margin-bottom: 30px;
+        font-size: clamp(46px, 12vw, 58px);
+      }
+      .instruction {
+        margin-bottom: 30px;
+        font-size: clamp(17px, 4.5vw, 21px);
+      }
+      .upload-button {
+        width: min(260px, 100%);
+        min-width: 205px;
+        min-height: 64px;
+        padding: 7px 8px 7px 20px;
+      }
+      .upload-button .upload-label {
+        font-size: 23px;
+      }
+      .upload-button .btn-icon {
+        flex-basis: 44px;
+        width: 44px;
+        height: 44px;
+      }
+      .preview-area {
+        gap: 26px;
+      }
+      .preview-image {
+        max-width: 100%;
+        max-height: 52vh;
+      }
+      .calculate-button {
+        min-width: 220px;
+        min-height: 56px;
+      }
+      .calculate-button span {
+        font-size: 27px;
+        padding-inline: 1.05em;
+        padding-block: 0.5em;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Mid Average Calci</h1>
+    <p class="instruction">
+      upload image and get your mid term marks average
+    </p>
+    <input
+      id="imageInput"
+      type="file"
+      accept="image/*"
+      aria-label="Choose an image to upload"
+    />
+    <div class="button-wrap" id="button-wrap">
+      <button
+        class="upload-button"
+        id="upload-button"
+        type="button"
+        aria-label="Upload marks image"
+      >
+        <span class="upload-label">Upload</span>
+        <span class="btn-icon" aria-hidden="true">
+          <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path d="M779.180132 473.232045 322.354755 16.406668c-21.413706-21.413706-56.121182-21.413706-77.534887 0-21.413706 21.413706-21.413706 56.122205 0 77.534887l418.057421 418.057421L244.819868 930.057421c-21.413706 21.413706-21.413706 56.122205 0 77.534887 10.706853 10.706853 24.759917 16.059767 38.767955 16.059767s28.061103-5.353938 38.767955-16.059767L779.180132 550.767955C800.593837 529.35425 800.593837 494.64575 779.180132 473.232045z" />
+          </svg>
+        </span>
+      </button>
+      <div class="button-shadow" aria-hidden="true"></div>
+    </div>
+    <section
+      class="preview-area"
+      id="preview-area"
+      hidden
+      aria-live="polite"
+    >
+      <img
+        class="preview-image"
+        id="preview-image"
+        alt="Selected marks image preview"
+      />
+      <div class="action-row">
+        <div class="calculate-button-wrap">
+          <button class="calculate-button" id="replace-button" type="button">
+            <span>replace</span>
+          </button>
+          <div class="button-shadow" aria-hidden="true"></div>
+        </div>
+        <div class="calculate-button-wrap" id="calculate-button-wrap">
+          <button class="calculate-button" id="calculate-button" type="button">
+            <span>calculate</span>
+          </button>
+          <div class="button-shadow" aria-hidden="true"></div>
+        </div>
+      </div>
+      <span id="loading" style="display:none;"></span>
+    </section>
+    <div id="resultsContainer"></div>
+  </main>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+    const imageInput = document.getElementById("imageInput");
+    const uploadButton = document.getElementById("upload-button");
+    const buttonWrap = document.getElementById("button-wrap");
+    const previewArea = document.getElementById("preview-area");
+    const previewImg = document.getElementById("preview-image"); // renamed: script.js already has a previewImage() function
+    const resultsContainer = document.getElementById("resultsContainer");
+    const loadingEl = document.getElementById("loading");
+    let previewUrl = null;
+
+    uploadButton.addEventListener("click", () => imageInput.click());
+
+    // Replace: reset value so picking the same file again still fires "change"
+    document.getElementById("replace-button").addEventListener("click", () => {
+      imageInput.value = "";
+      imageInput.click();
+    });
+
+    // Calculate -> script.js
+    document.getElementById("calculate-button").addEventListener("click", uploadImage);
+
+    imageInput.addEventListener("change", () => {
+      const image = imageInput.files[0];
+      if (!image) return;
+      if (!image.type.startsWith("image/")) {
+        imageInput.value = "";
+        return;
+      }
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+      previewUrl = URL.createObjectURL(image);
+      previewImg.src = previewUrl;
+
+      // clear old results when the image changes
+      resultsContainer.innerHTML = "";
+      loadingEl.style.display = "none";
+
+      uploadButton.hidden = true;
+      buttonWrap.hidden = true;
+      previewArea.hidden = false;
+    });
+
+    window.addEventListener("beforeunload", () => {
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
+    });
+  </script>
+</body>
+</html>
