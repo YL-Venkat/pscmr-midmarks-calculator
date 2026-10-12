@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calculate your mid average faster</title>
+  <link rel="icon" type="image/png" href="images/g_logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inika:wght@400;700&family=Inspiration&family=Lakki+Reddy&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="girl.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="PSCMR Mid Calci home">
+        PSCMR Mid Calci
+      </a>
+      <nav class="navigation" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="#overview">Overview</a>
+        <a href="#updates">Updates</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main class="hero" id="instructions">
+      <section class="hero-copy" aria-labelledby="page-title">
+        <h1 id="page-title">Calculate your mid average faster</h1>
+        <p class="instruction">
+          your mid average calculator is ready!
+        </p>
+        <button
+          class="start-button"
+          type="button"
+          id="start-button"
+        >
+          <span>start using</span>
+          <span aria-hidden="true">➟</span>
+        </button>
+        <input
+          id="image-input"
+          type="file"
+          accept="image/*"
+          aria-label="Choose an image"
+        />
+      </section>
+      <img
+        class="character"
+        src="images/male.png"
+        alt="Male character"
+      />
+    </main>
+  </div>
+  <section class="overview-screen" id="overview" aria-labelledby="overview-title">
+    <h2 class="overview-title" id="overview-title">Overview</h2>
+    <div class="overview-cards">
+      <article class="overview-item">
+        <div class="overview-card">
+          <img src="images/e1.png" alt="Image 1" />
+        </div>
+      </article>
+      <article class="overview-item">
+        <div class="overview-card">
+          <img src="images/e2.jpg" alt="Image 2" />
+        </div>
+      </article>
+    </div>
+    <ul class="overview-notes">
+        <li>Above are some example images representing the types of images you can upload.</li>
+      <li>Processing of image may take a few seconds, varying based on the image.</li>
+      <li>For accurate predictions and best results, upload a clear image showing both midterm marks.</li>
+    </ul>
+  </section>
+  <section class="updates-features" aria-label="Updates and features">
+    <article class="info-panel" id="updates" aria-labelledby="updates-title">
+      <h2 class="info-title" id="updates-title">Updates</h2>
+      <ul>
+        <li>Image processing was made faster than before.</li>
+        <li>Accuracy has also improved compared with the previous version.</li>
+        <li>Increased user capacity, so more users can use it at the same time.</li>
+      </ul>
+    </article>
+    <article class="info-panel" id="features" aria-labelledby="features-title">
+      <h2 class="info-title" id="features-title">Features</h2>
+      <p>Currently you can calculate the mid term marks average.</p>
+      <p>An attendance calculator is planned and is currently in development.</p>
+    </article>
+  </section>
+  <section class="contact-screen" id="contact" aria-labelledby="contact-title">
+    <h2 class="contact-title" id="contact-title">Contact</h2>
+    <div class="contact-layout contact-layout-girl">
+      <form class="contact-form">
+        <label for="girl-report">What are you reporting?</label>
+        <select id="girl-report" name="report-type" required>
+          <option value="" selected disabled>-- select an option --</option>
+          <option value="calculation-error">Calculation error</option>
+          <option value="suggestion">Suggestion</option>
+          <option value="feedback">Feedback</option>
+          <option value="other">Other</option>
+        </select>
+
+        <label for="girl-email">Email</label>
+        <input id="girl-email" name="email" type="email" placeholder="enter your email" required />
+
+        <label for="girl-message">Describe the issue or suggestion</label>
+        <textarea id="girl-message" name="message" placeholder="Tell us what happened?" maxlength="500" required></textarea>
+
+        <button type="submit">submit</button>
+      </form>
+      <img class="contact-character" src="images/male.png" alt="Male character" />
+    </div>
+  </section>
+  <script src="both.js"></script>
+</body>
+</html>
