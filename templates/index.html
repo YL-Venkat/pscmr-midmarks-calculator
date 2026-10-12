@@ -19,11 +19,11 @@
   <main class="gender-selection">
     <h2>choose your gender</h2>
     <div class="characters">
-      <button class="character female" type="button" aria-label="Select Female" onclick="window.location.href='girl.html'">
+      <button class="character female" type="button" aria-label="Select Female" onclick="window.location.href='{{ url_for('girl_page') }}'">
         <img src="{{ url_for('serve_image', filename='female.png') }}" alt="Female Character" />
       </button>
 
-      <button class="character male" type="button" aria-label="Select Male" onclick="window.location.href='boy.html'">
+      <button class="character male" type="button" aria-label="Select Male" onclick="window.location.href='{{ url_for('boy_page') }}'">
         <img src="{{ url_for('serve_image', filename='male.png') }}" alt="Male Character" />
       </button>
     </div>
