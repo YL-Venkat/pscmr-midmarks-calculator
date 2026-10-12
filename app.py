@@ -279,9 +279,17 @@ def normalize_metric_label(raw_label):
 def home():
     return render_template("index.html")
 
-@app.route("/guide")
-def guide_page():
-    return render_template("bs.html")
+@app.route("/girl")
+def girl_page():
+    return render_template("girl.html")
+
+@app.route("/boy")
+def boy_page():
+    return render_template("boy.html")
+
+@app.route("/calculator")
+def calculator_page():
+    return render_template("calculator.html")
 
 @app.route("/process-image", methods=["POST"])
 def process_image():
