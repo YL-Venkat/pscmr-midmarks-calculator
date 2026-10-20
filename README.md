@@ -94,8 +94,3 @@ Uploaded images are processed in memory. Only an upload that **fails the self-ch
 ## Roadmap
 
 - Attendance calculator
-
-## Author
-
-Built by **LAKSHMI VENKAT YALAVARTHI**, final-year B.Tech CSE (IoT and Cybersecurity including Blockchain Technology).
-GitHub: <https://github.com/YL-Venkat>
